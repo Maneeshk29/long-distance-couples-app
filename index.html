@@ -1,0 +1,295 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Closer · for long-distance couples</title>
+<meta name="description" content="Reconnect after an argument: a gentle pause, a shared memory, and a collage made from photos you both approved.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,700&family=Nunito:wght@400;600;700&display=swap" rel="stylesheet">
+<style>
+:root{--lav:#f3edfb;--lav2:#e6dbf7;--purple:#8b6cc9;--deep:#4b3573;--rose:#e0607e;--rose-soft:#fbe3ea;--lily:#fffdf8;--leaf:#7fae8b;--ink:#3a2d52;--mute:#7c6f93}
+*{box-sizing:border-box}
+body{margin:0;background:linear-gradient(180deg,var(--lav),#fbf8ff 60%,var(--rose-soft));color:var(--ink);font:15px/1.6 Nunito,system-ui,sans-serif;min-height:100vh}
+.wrap{max-width:1040px;margin:0 auto;padding:22px 16px 64px;position:relative}
+h1,h2,h3{font-family:Fraunces,Georgia,serif;color:var(--deep);margin:0}
+header{display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap;margin-bottom:18px}
+.logo{display:flex;align-items:center;gap:8px;font-family:Fraunces,serif;font-size:24px;font-weight:700;color:var(--deep)}
+.hero{display:grid;grid-template-columns:1.2fr 1fr;gap:20px;align-items:center;margin-bottom:22px}
+.hero h1{font-size:clamp(30px,5vw,48px);line-height:1.08;margin-bottom:12px}
+.hero h1 em{color:var(--rose);font-style:italic}
+.hero p{color:var(--mute);font-size:17px;max-width:520px}
+.card{background:rgba(255,255,255,.82);border:1px solid var(--lav2);border-radius:22px;padding:20px;box-shadow:0 10px 30px rgba(139,108,201,.10);backdrop-filter:blur(4px)}
+.grid{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+.section{margin-top:18px}
+.sub{color:var(--mute);font-size:13.5px}
+.btn{display:inline-flex;align-items:center;gap:8px;border:0;border-radius:999px;padding:11px 18px;font:inherit;font-weight:700;cursor:pointer;transition:transform .1s}
+.btn:active{transform:scale(.97)}
+.btn.rose{background:var(--rose);color:#fff;box-shadow:0 6px 16px rgba(224,96,126,.3)}
+.btn.lav{background:var(--purple);color:#fff}
+.btn.soft{background:var(--lav2);color:var(--deep)}
+.btn:disabled{opacity:.5;cursor:not-allowed}
+.toggle{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:12px 0;border-bottom:1px dashed var(--lav2)}
+.toggle:last-child{border:0}
+.switch{position:relative;width:48px;height:28px;flex:none}
+.switch input{opacity:0;width:0;height:0}
+.switch span{position:absolute;inset:0;background:#d8cde9;border-radius:999px;transition:.2s;cursor:pointer}
+.switch span:before{content:"";position:absolute;width:22px;height:22px;left:3px;top:3px;background:#fff;border-radius:50%;transition:.2s;box-shadow:0 1px 3px rgba(0,0,0,.2)}
+.switch input:checked+span{background:var(--rose)}
+.switch input:checked+span:before{transform:translateX(20px)}
+.call{display:flex;gap:14px;align-items:center;margin:14px 0}
+.avatar{width:58px;height:58px;border-radius:50%;display:grid;place-items:center;font-weight:700;color:#fff;font-size:20px}
+.meter{height:14px;border-radius:999px;background:linear-gradient(90deg,var(--leaf),#f0c36d,var(--rose));position:relative;margin:10px 0 4px}
+.meter i{position:absolute;top:-5px;width:6px;height:24px;border-radius:4px;background:var(--deep);transition:left .4s}
+.pause{display:none;margin-top:14px;background:linear-gradient(135deg,var(--rose-soft),var(--lav));border:1px solid #f3c1cf;border-radius:18px;padding:16px;gap:14px;align-items:center}
+.pause.show{display:flex}
+.pause img{width:96px;height:96px;object-fit:cover;border-radius:14px;flex:none;background:var(--lav2)}
+.album{display:grid;grid-template-columns:repeat(auto-fill,minmax(92px,1fr));gap:8px;margin-top:12px}
+.ph{position:relative;aspect-ratio:1;border-radius:12px;overflow:hidden;border:3px solid transparent;cursor:pointer;background:var(--lav2)}
+.ph img{width:100%;height:100%;object-fit:cover;display:block}
+.ph.ok{border-color:var(--rose)}
+.ph b{position:absolute;right:5px;top:5px;background:#fff;color:var(--rose);border-radius:999px;font-size:11px;padding:1px 7px}
+.drop{border:2px dashed #cdbbe9;border-radius:16px;padding:16px;text-align:center;color:var(--mute);cursor:pointer;display:block}
+.drop:hover{border-color:var(--rose);color:var(--deep)}
+input[type=text]{width:100%;padding:11px 14px;border-radius:12px;border:1px solid var(--lav2);font:inherit;background:#fff;color:var(--ink)}
+canvas{width:100%;border-radius:16px;display:block;background:var(--lav)}
+.stage{position:relative;aspect-ratio:16/10;border-radius:16px;overflow:hidden;background:var(--deep)}
+.stage img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;opacity:0;transition:opacity 1.2s}
+.stage img.on{opacity:1}
+.stage .cap{position:absolute;left:0;right:0;bottom:0;padding:12px 16px;color:#fff;background:linear-gradient(transparent,rgba(43,25,70,.75));font-family:Fraunces,serif}
+.row{display:flex;gap:8px;flex-wrap:wrap;align-items:center;margin-top:12px}
+.flora{position:fixed;pointer-events:none;opacity:.55;z-index:-1}
+footer{margin-top:28px;text-align:center;color:var(--mute);font-size:12.5px}
+@media (max-width:760px){.hero,.grid{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+<!-- lilies and a rose -->
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <symbol id="lily" viewBox="0 0 120 120">
+    <g fill="#fffdf8" stroke="#c9b6e8" stroke-width="2">
+      <path d="M60 64 C40 40 30 18 44 8 C54 22 60 42 60 64Z"/>
+      <path d="M60 64 C80 40 90 18 76 8 C66 22 60 42 60 64Z"/>
+      <path d="M60 64 C30 60 10 50 8 36 C26 34 46 46 60 64Z"/>
+      <path d="M60 64 C90 60 110 50 112 36 C94 34 74 46 60 64Z"/>
+      <path d="M60 64 C52 40 54 16 60 4 C66 16 68 40 60 64Z" fill="#f6effd"/>
+    </g>
+    <g stroke="#e0a63a" stroke-width="1.5"><path d="M60 62 L52 34M60 62 L60 30M60 62 L68 34"/></g>
+    <g fill="#d9852b"><circle cx="52" cy="33" r="2.5"/><circle cx="60" cy="29" r="2.5"/><circle cx="68" cy="33" r="2.5"/></g>
+    <path d="M60 64 C60 86 58 104 54 118" stroke="#7fae8b" stroke-width="3" fill="none"/>
+  </symbol>
+  <symbol id="rose" viewBox="0 0 120 120">
+    <path d="M60 70 C60 92 62 106 66 118" stroke="#7fae8b" stroke-width="3" fill="none"/>
+    <path d="M62 96 C76 86 88 90 92 98 C80 104 70 102 62 96Z" fill="#9cc5a6"/>
+    <circle cx="60" cy="48" r="30" fill="#e0607e"/>
+    <path d="M60 22 C78 24 88 40 84 54 C76 42 66 38 56 40 C48 42 44 50 46 58 C34 50 36 30 60 22Z" fill="#c9476a"/>
+    <path d="M58 34 C70 34 76 44 72 52 C66 46 58 46 54 50 C52 42 52 36 58 34Z" fill="#f08aa3"/>
+    <path d="M40 56 C46 72 64 78 80 66 C74 80 52 84 40 70Z" fill="#c9476a"/>
+  </symbol>
+</svg>
+<svg class="flora" style="left:-30px;bottom:-20px;width:220px;height:220px"><use href="#lily"/></svg>
+<svg class="flora" style="right:-24px;top:90px;width:170px;height:170px;transform:rotate(14deg)"><use href="#lily"/></svg>
+<svg class="flora" style="right:40px;bottom:-10px;width:150px;height:150px"><use href="#rose"/></svg>
+
+<div class="wrap">
+  <header>
+    <div class="logo"><svg width="34" height="34"><use href="#rose"/></svg> Closer</div>
+    <span class="sub">for long-distance couples</span>
+  </header>
+
+  <section class="hero">
+    <div>
+      <h1>After an argument, find your way <em>back to each other.</em></h1>
+      <p>Closer listens for the moment a call starts to spiral, suggests a gentle pause, and brings back a memory you share, then turns the photos you've both approved into a collage or a little video set to your song.</p>
+    </div>
+    <div class="card">
+      <h3>Both of you are in control</h3>
+      <p class="sub">Nothing is analyzed unless both partners opt in. Turn either switch off at any time.</p>
+      <div class="toggle"><div><b id="name-a">Maya</b><div class="sub">Opt in to call support and memories</div></div><label class="switch"><input type="checkbox" id="opt-a"><span></span></label></div>
+      <div class="toggle"><div><b id="name-b">Eli</b><div class="sub">Opt in to call support and memories</div></div><label class="switch"><input type="checkbox" id="opt-b"><span></span></label></div>
+      <div class="sub" id="consent-state" style="margin-top:8px"></div>
+    </div>
+  </section>
+
+  <div class="grid">
+    <section class="card">
+      <h2>Call room</h2>
+      <p class="sub">Practice mode: a simulated call, or use your microphone's volume (processed on this device only; no audio is recorded or uploaded).</p>
+      <div class="call">
+        <div class="avatar" style="background:var(--purple)">M</div>
+        <div style="flex:1"><b id="call-status">Not in a call</b><div class="sub" id="call-time">—</div></div>
+        <div class="avatar" style="background:var(--rose)">E</div>
+      </div>
+      <div class="sub">Conversation temperature</div>
+      <div class="meter"><i id="needle" style="left:4%"></i></div>
+      <div class="sub" style="display:flex;justify-content:space-between"><span>calm</span><span>heated</span></div>
+      <div class="row">
+        <button class="btn lav" id="start-sim">Start practice call</button>
+        <button class="btn soft" id="start-mic">Use my microphone</button>
+        <button class="btn soft" id="end-call" disabled>End call</button>
+      </div>
+      <div class="pause" id="pause" role="alert">
+        <img id="pause-img" alt="">
+        <div>
+          <h3>Let's take a breath together</h3>
+          <p class="sub" id="pause-text" style="margin:4px 0 10px"></p>
+          <button class="btn rose" id="revisit">Revisit this memory</button>
+          <button class="btn soft" id="keep-talking">Keep talking</button>
+        </div>
+      </div>
+    </section>
+
+    <section class="card">
+      <h2>Shared album</h2>
+      <p class="sub">Add photos of the two of you, then tap to approve them. Only approved photos are ever used.</p>
+      <label class="drop" for="files">＋ Add photos <span class="sub">(they stay on this device)</span></label>
+      <input type="file" id="files" accept="image/*" multiple hidden>
+      <div class="album" id="album"></div>
+      <div class="row"><span class="sub" id="approved-count"></span></div>
+    </section>
+  </div>
+
+  <section class="card section">
+    <h2>Make a memory</h2>
+    <p class="sub">Built from your approved photos. Pick your song to set the mood.</p>
+    <div class="row">
+      <input type="text" id="song" placeholder="Your song, e.g. “Lover” by Taylor Swift" style="max-width:360px">
+      <label class="btn soft" for="audio">♪ Add the song file</label><input type="file" id="audio" accept="audio/*" hidden>
+      <button class="btn rose" id="make-collage">Create collage</button>
+      <button class="btn lav" id="make-video">Play memory video</button>
+      <a class="btn soft" id="download" download="closer-collage.png" hidden>Download collage</a>
+    </div>
+    <div class="grid section">
+      <canvas id="collage" width="1200" height="800" aria-label="Collage"></canvas>
+      <div class="stage" id="stage"><div class="cap" id="stage-cap">Your memory video plays here</div></div>
+    </div>
+    <audio id="player" hidden></audio>
+  </section>
+
+  <footer>Closer is a concept prototype by Maneeshkumar Lillyprabhu. Photos, songs and microphone levels never leave this browser.</footer>
+</div>
+
+<script>
+const $ = id => document.getElementById(id);
+const MEMORIES = ["the night you stayed up talking until sunrise", "your first trip together", "the inside joke that still makes you both laugh", "the day you said “I love you”", "your favorite video call date"];
+let photos = [];          // {url, ok}
+let timer = null, startedAt = 0, temp = 0.08, hot = 0, mic = null, slide = null;
+
+function consented() { return $("opt-a").checked && $("opt-b").checked; }
+function refreshConsent() {
+  const ok = consented();
+  $("consent-state").textContent = ok ? "✓ You're both in. Call support and memories are on." : "Waiting for both partners to opt in.";
+  ["start-sim", "start-mic", "make-collage", "make-video"].forEach(id => $(id).disabled = !ok);
+  if (!ok) endCall();
+}
+$("opt-a").onchange = $("opt-b").onchange = refreshConsent;
+
+// ----- album -----
+$("files").onchange = e => {
+  for (const f of e.target.files) photos.push({ url: URL.createObjectURL(f), ok: true });
+  e.target.value = ""; renderAlbum();
+};
+function renderAlbum() {
+  $("album").innerHTML = photos.map((p, i) => `<div class="ph ${p.ok ? "ok" : ""}" data-i="${i}" title="Tap to ${p.ok ? "remove approval" : "approve"}"><img src="${p.url}" alt="">${p.ok ? "<b>approved</b>" : ""}</div>`).join("");
+  const n = photos.filter(p => p.ok).length;
+  $("approved-count").textContent = photos.length ? `${n} of ${photos.length} photos approved` : "No photos yet. Sample memories use soft placeholders.";
+}
+$("album").onclick = e => { const el = e.target.closest(".ph"); if (el) { photos[el.dataset.i].ok = !photos[el.dataset.i].ok; renderAlbum(); } };
+function approved() { return photos.filter(p => p.ok).map(p => p.url); }
+
+// placeholder art when no photos are approved yet
+function placeholder(i) {
+  const c = document.createElement("canvas"); c.width = 600; c.height = 600; const x = c.getContext("2d");
+  const g = x.createLinearGradient(0, 0, 600, 600); g.addColorStop(0, ["#e6dbf7", "#fbe3ea", "#f3edfb"][i % 3]); g.addColorStop(1, ["#c9b6e8", "#f2b6c6", "#d8cde9"][i % 3]);
+  x.fillStyle = g; x.fillRect(0, 0, 600, 600);
+  x.fillStyle = "rgba(75,53,115,.75)"; x.font = "600 34px Fraunces, serif"; x.textAlign = "center";
+  x.fillText(["♥", "✿", "❀"][i % 3], 300, 280); x.font = "24px Nunito, sans-serif"; x.fillText(MEMORIES[i % MEMORIES.length], 300, 340, 520);
+  return c.toDataURL();
+}
+function memoryImages() { const a = approved(); return a.length ? a : [0, 1, 2, 3].map(placeholder); }
+
+// ----- call room -----
+function setTemp(v) {
+  temp = Math.max(0, Math.min(1, v));
+  $("needle").style.left = (4 + temp * 90) + "%";
+  hot = temp > 0.72 ? hot + 1 : Math.max(0, hot - 1);
+  if (hot >= 4 && !$("pause").classList.contains("show")) suggestPause();
+}
+function tick() {
+  const s = Math.floor((Date.now() - startedAt) / 1000);
+  $("call-time").textContent = `${String(Math.floor(s / 60)).padStart(2, "0")}:${String(s % 60).padStart(2, "0")}`;
+  if (!mic) setTemp(temp + (Math.random() - 0.35) * 0.12);    // practice: drifts upward like a tense conversation
+}
+function startCall(label) {
+  endCall(); startedAt = Date.now(); temp = 0.08; hot = 0;
+  $("call-status").textContent = label; $("end-call").disabled = false; $("pause").classList.remove("show");
+  timer = setInterval(tick, 700);
+}
+async function startMic() {
+  try {
+    const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
+    const ctx = new AudioContext(), an = ctx.createAnalyser(); an.fftSize = 512;
+    ctx.createMediaStreamSource(stream).connect(an);
+    const buf = new Uint8Array(an.fftSize);
+    startCall("Live: listening to volume only");
+    mic = { stream, ctx, loop: setInterval(() => {
+      an.getByteTimeDomainData(buf);
+      let sum = 0; for (const b of buf) sum += ((b - 128) / 128) ** 2;
+      const rms = Math.sqrt(sum / buf.length);           // loudness 0..~0.5
+      setTemp(temp * 0.85 + Math.min(1, rms * 4) * 0.15);
+    }, 300) };
+  } catch { alert("Microphone not available. Try the practice call instead."); }
+}
+function endCall() {
+  clearInterval(timer); timer = null;
+  if (mic) { clearInterval(mic.loop); mic.stream.getTracks().forEach(t => t.stop()); mic.ctx.close(); mic = null; }
+  $("call-status").textContent = "Not in a call"; $("call-time").textContent = "—"; $("end-call").disabled = true;
+}
+function suggestPause() {
+  const imgs = memoryImages(), i = Math.floor(Math.random() * imgs.length);
+  $("pause-img").src = imgs[i];
+  $("pause-text").textContent = `Things are getting heated. How about a two-minute pause to remember ${MEMORIES[Math.floor(Math.random() * MEMORIES.length)]}?`;
+  $("pause").classList.add("show");
+}
+$("start-sim").onclick = () => startCall("Practice call with Eli");
+$("start-mic").onclick = startMic;
+$("end-call").onclick = endCall;
+$("keep-talking").onclick = () => { $("pause").classList.remove("show"); hot = 0; };
+$("revisit").onclick = () => { $("pause").classList.remove("show"); setTemp(0.15); hot = 0; playVideo(); $("stage").scrollIntoView({ behavior: "smooth", block: "center" }); };
+
+// ----- collage & memory video -----
+function loadImg(src) { return new Promise(r => { const i = new Image(); i.onload = () => r(i); i.src = src; }); }
+async function makeCollage() {
+  const c = $("collage"), x = c.getContext("2d"), imgs = await Promise.all(memoryImages().slice(0, 6).map(loadImg));
+  x.fillStyle = "#f3edfb"; x.fillRect(0, 0, c.width, c.height);
+  const n = imgs.length, cols = n <= 2 ? n : n <= 4 ? 2 : 3, rows = Math.ceil(n / cols), pad = 22;
+  const w = (c.width - pad * (cols + 1)) / cols, h = (c.height - 120 - pad * (rows + 1)) / rows;
+  imgs.forEach((im, k) => {
+    const cx = pad + (k % cols) * (w + pad), cy = pad + Math.floor(k / cols) * (h + pad);
+    const s = Math.max(w / im.width, h / im.height), sw = w / s, sh = h / s;
+    x.save(); x.beginPath(); x.roundRect(cx, cy, w, h, 22); x.clip();
+    x.drawImage(im, (im.width - sw) / 2, (im.height - sh) / 2, sw, sh, cx, cy, w, h); x.restore();
+  });
+  x.fillStyle = "#4b3573"; x.font = "700 44px Fraunces, serif"; x.textAlign = "center";
+  x.fillText("Us, always ♥", c.width / 2, c.height - 62);
+  x.font = "26px Nunito, sans-serif"; x.fillStyle = "#e0607e";
+  x.fillText($("song").value ? "♪ " + $("song").value : "Maya & Eli", c.width / 2, c.height - 24);
+  $("download").href = c.toDataURL("image/png"); $("download").hidden = false;
+}
+function playVideo() {
+  clearInterval(slide);
+  const st = $("stage"); st.querySelectorAll("img").forEach(i => i.remove());
+  const imgs = memoryImages().map(src => { const i = new Image(); i.src = src; st.prepend(i); return i; });
+  let k = 0; imgs[0].classList.add("on");
+  $("stage-cap").textContent = $("song").value ? "♪ " + $("song").value : "Our story so far";
+  const p = $("player"); if (p.src) { p.currentTime = 0; p.play().catch(() => {}); }
+  slide = setInterval(() => { imgs[k].classList.remove("on"); k = (k + 1) % imgs.length; imgs[k].classList.add("on"); }, 2600);
+}
+$("audio").onchange = e => { const f = e.target.files[0]; if (f) { $("player").src = URL.createObjectURL(f); if (!$("song").value) $("song").value = f.name.replace(/\.[^.]+$/, ""); } };
+$("make-collage").onclick = makeCollage;
+$("make-video").onclick = playVideo;
+
+renderAlbum(); refreshConsent();
+</script>
+</body>
+</html>
